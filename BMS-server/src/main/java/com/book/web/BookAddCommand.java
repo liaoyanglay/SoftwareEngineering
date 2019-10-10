@@ -1,32 +1,27 @@
 package com.book.web;
 
-import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class BookAddCommand {
 
-    private int id;
+//    private int id;
     private String name;
     private String cover;
     private String author;
     private String clazz;
-    private boolean isRent;
+//    private boolean isRent;
     private String publisher;
     private String publishDate;
     private String price;
     private float rate;
-    private String ISBN;
+    private String isbn;
     private String description;
 
-    public int getId() {
-        return id;
-    }
+//    public int getId() {
+//        return id;
+//    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+//    public void setId(int id) {
+//        this.id = id;
+//    }
 
     public String getName() {
         return name;
@@ -60,13 +55,13 @@ public class BookAddCommand {
         this.clazz = clazz;
     }
 
-    public boolean isRent() {
-        return isRent;
-    }
+//    public boolean isRent() {
+//        return isRent;
+//    }
 
-    public void setRent(boolean rent) {
-        isRent = rent;
-    }
+//    public void setRent(boolean rent) {
+//        isRent = rent;
+//    }
 
     public String getPublisher() {
         return publisher;
@@ -100,12 +95,12 @@ public class BookAddCommand {
         this.rate = rate;
     }
 
-    public String getISBN() {
-        return ISBN;
+    public String getIsbn() {
+        return isbn;
     }
 
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
     public String getDescription() {

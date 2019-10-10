@@ -51,7 +51,7 @@ CREATE TABLE `book_info` (
   `name` varchar(50) NOT NULL,
   `author` varchar(50) NOT NULL,
   `publish` varchar(30) NOT NULL,
-  `ISBN` varchar(13) NOT NULL,
+  `isbn` varchar(13) NOT NULL,
   `introduction` text,
   `language` varchar(10) NOT NULL,
   `price` decimal(10,2) NOT NULL,
@@ -65,7 +65,7 @@ CREATE TABLE `book_info` (
 -- 转存表中的数据 `book_info`
 --
 
-INSERT INTO `book_info` (`book_id`, `name`, `author`, `publish`, `ISBN`, `introduction`, `language`, `price`, `pubdate`, `class_id`, `pressmark`, `state`) VALUES
+INSERT INTO `book_info` (`book_id`, `name`, `author`, `publish`, `isbn`, `introduction`, `language`, `price`, `pubdate`, `class_id`, `pressmark`, `state`) VALUES
 (10000001, '大雪中的山庄', '东野圭吾 ', '北京十月文艺出版社', '9787530216835', '东野圭吾长篇小说杰作，中文简体首次出版。 一出没有剧本的舞台剧，为什么能让七个演员赌上全部人生.东野圭吾就是有这样过人的本领，能从充满悬念的案子写出荡气回肠的情感，在极其周密曲折的同时写出人性的黑暗与美丽。 一家与外界隔绝的民宿里，七个演员被要求住满四天，接受导演的考验，但不断有人失踪。难道这并非正常排练，而是有人布下陷阱要杀他们。 那时候我开始喜欢上戏剧和音乐，《大雪中的山庄》一书的灵感就来源于此。我相信这次的诡计肯定会让人大吃一惊。——东野圭吾', '中文', '35.00', '2017-06-01', 9, 13, 1),
 (10000003, '三生三世 十里桃花', '唐七公子 ', '沈阳出版社', '9787544138000', '三生三世，她和他，是否注定背负一段纠缠的姻缘？\r\n三生三世，她和他，是否终能互许一个生生世世的承诺？', '中文', '26.80', '2009-01-06', 7, 2, 1),
 (10000004, '何以笙箫默', '顾漫 ', '朝华出版社', '9787505414709', '一段年少时的爱恋，牵出一生的纠缠。大学时代的赵默笙阳光灿烂，对法学系大才子何以琛一见倾心，开朗直率的她拔足倒追，终于使才气出众的他为她停留驻足。然而，不善表达的他终于使她在一次伤心之下远走他乡……', '中文', '15.00', '2007-04-03', 7, 2, 1),

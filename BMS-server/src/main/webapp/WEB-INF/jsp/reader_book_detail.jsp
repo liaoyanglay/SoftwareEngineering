@@ -69,7 +69,7 @@
                     <td>${detail.publish}</td>
                 </tr>
                 <tr>
-                    <th>ISBN</th>
+                    <th>isbn</th>
                     <td>${detail.isbn}</td>
                 </tr>
                 <tr>

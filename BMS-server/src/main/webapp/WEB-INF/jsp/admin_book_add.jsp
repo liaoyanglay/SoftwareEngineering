@@ -87,7 +87,7 @@
                     <input type="text" class="form-control"  name="publish" id="publish"  placeholder="请输入出版社">
                 </div>
                 <div class="form-group">
-                    <label for="isbn">ISBN</label>
+                    <label for="isbn">isbn</label>
                     <input type="text" class="form-control" name="isbn" id="isbn"  placeholder="请输入ISBN">
                 </div>
                 <div class="form-group">

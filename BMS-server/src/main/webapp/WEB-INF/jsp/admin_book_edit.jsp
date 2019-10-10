@@ -93,7 +93,7 @@
                     <input type="text" class="form-control" name="publish" id="publish"  value="${detail.publish}" >
                 </div>
                 <div class="input-group">
-                    <span class="input-group-addon">ISBN</span>
+                    <span class="input-group-addon">isbn</span>
                     <input type="text" class="form-control" name="isbn" id="isbn"  value="${detail.isbn}" >
                 </div>
                 <div class="input-group">

@@ -114,7 +114,7 @@
                     <th>书名</th>
                     <th>作者</th>
                     <th>出版社</th>
-                    <th>ISBN</th>
+                    <th>isbn</th>
                     <th>价格</th>
                     <th>状态</th>
                     <th>详情</th>

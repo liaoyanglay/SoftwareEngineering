@@ -22,7 +22,7 @@ public class BookDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    private final static String ADD_BOOK_SQL = "INSERT INTO book_info VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+    private final static String ADD_BOOK_SQL = "INSERT INTO book_info VALUES(NULL,?,?,?,?,?,?,?,?,?,?,?)";
     private final static String DELETE_BOOK_SQL = "delete from book_info where id = ?  ";
     private final static String EDIT_BOOK_SQL = "update book_info set bookname= ? ,cover= ? ,clazz= ? ,author= ? ,publisher= ? ,publishDate= ? ,price= ? ,rate= ? ,description= ? ,ISBN= ? ,isRent= ?  where id= ? ;";
     private final static String QUERY_ALL_BOOKS_SQL = "SELECT * FROM book_info ";
@@ -100,7 +100,6 @@ public class BookDao {
 
     public int addBook(Book book) {
 
-        int id = book.getId();
         String name = book.getName();
         String cover = book.getCover();
         String author = book.getAuthor();
@@ -113,7 +112,7 @@ public class BookDao {
         String ISBN = book.getISBN();
         String description = book.getDescription();
 
-        return jdbcTemplate.update(ADD_BOOK_SQL, new Object[]{id, name, cover, clazz, author, publisher, publishDate, price, rate, description, ISBN, isRent});
+        return jdbcTemplate.update(ADD_BOOK_SQL, new Object[]{name, cover, clazz, author, publisher, publishDate, price, rate, description, ISBN, isRent});
     }
 
     public Book getBook(Long bookId) {
@@ -152,6 +151,6 @@ public class BookDao {
         String ISBN = book.getISBN();
         String description = book.getDescription();
 
-        return jdbcTemplate.update(EDIT_BOOK_SQL, new Object[]{id, name, cover, clazz, author, publisher, publishDate, price, rate, description, ISBN, isRent});
+        return jdbcTemplate.update(EDIT_BOOK_SQL, new Object[]{name, cover, clazz, author, publisher, publishDate, price, rate, description, ISBN, isRent,id});
     }
 }
