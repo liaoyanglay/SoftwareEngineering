@@ -15,9 +15,9 @@
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close"
           p:driverClassName="com.mysql.jdbc.Driver"
-          p:url="jdbc:mysql://localhost:3306/library?serverTimezone=Asia/Shanghai &amp;characterEncoding=utf8"
+          p:url="jdbc:mysql://localhost:3306/library_manager?serverTimezone=Asia/Shanghai &amp;characterEncoding=utf8"
           p:username="root"
-          p:password="3714231999"/>
+          p:password="Q1902806374"/>
     <!-- 定义JDBC模板Bean   -->
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"
           p:dataSource-ref="dataSource"/>
