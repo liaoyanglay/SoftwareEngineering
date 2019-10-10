@@ -7,7 +7,8 @@ import com.example.bookmanagementsystem.data.model.LoggedInUser
  * maintains an in-memory cache of login status and user credentials information.
  */
 
-class LoginRepository(val dataSource: LoginDataSource) {
+object LoginRepository {
+    val dataSource = LoginDataSource()
 
     // in-memory cache of the loggedInUser object
     var user: LoggedInUser? = null
