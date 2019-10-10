@@ -1,12 +1,24 @@
 <resources>
-    <string name="app_name">BookManagementSystem</string>
+    <string name="app_name">图书管理系统</string>
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
+    <string name="prompt_email">用户名</string>
+    <string name="prompt_password">密码</string>
+    <string name="action_sign_in">登录</string>
+    <string name="action_sign_in_short">登录</string>
+    <string name="welcome">登录成功</string>
+    <string name="invalid_username">用户名无效</string>
+    <string name="invalid_password">密码必须大于5个字符</string>
+    <string name="login_failed">登录失败</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_book">图书</string>
+    <string name="title_reader">读者</string>
+    <string name="title_record">记录</string>
+    <string name="all_book">全部图书</string>
+    <string name="reader_info">读者信息</string>
+    <string name="rend_record">借阅记录</string>
+    <string name="search">搜索</string>
+    <string name="have_rent">#已借出</string>
+    <string name="book_details">书籍详情</string>
+    <string name="edit">编辑</string>
+    <string name="delete">删除</string>
 </resources>
