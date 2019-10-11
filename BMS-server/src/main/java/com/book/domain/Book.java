@@ -1,12 +1,10 @@
 package com.book.domain;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Date;
 
 public class Book implements Serializable{
 
-    private int id;
+    private long id;
     private String name;
     private String cover;
     private String author;
@@ -16,14 +14,14 @@ public class Book implements Serializable{
     private String publishDate;
     private String price;
     private float rate;
-    private String ISBN;
+    private String isbn;
     private String description;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -99,12 +97,12 @@ public class Book implements Serializable{
         this.rate = rate;
     }
 
-    public String getISBN() {
-        return ISBN;
+    public String getIsbn() {
+        return isbn;
     }
 
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
     public String getDescription() {

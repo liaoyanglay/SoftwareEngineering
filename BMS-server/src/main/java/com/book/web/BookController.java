@@ -2,7 +2,6 @@ package com.book.web;
 
 import com.book.domain.Book;
 import com.book.service.BookService;
-import com.sun.tracing.dtrace.Attributes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +24,7 @@ public class BookController {
 
     @RequestMapping(value = "/querybook", produces = {"application/JSON;charset=UTF-8"})
     @ResponseBody
-    public ArrayList<Book> queryBookDo(HttpServletRequest request,@RequestParam("bookname") String searchWord) {
+    public ArrayList<Book> queryBookDo(@RequestParam("name") String searchWord) {
         boolean exist = bookService.matchBook(searchWord);
         if (exist) {
             ArrayList<Book> books = bookService.queryBook(searchWord);
@@ -63,11 +62,11 @@ public class BookController {
     }
 
     @RequestMapping(value = "/deletebook",method = RequestMethod.POST,
-            consumes = {"application/JSON;charset=UTF-8"},
             produces = {"application/JSON;charset=UTF-8"})
     @ResponseBody
-    public ModelAndView deleteBook(HttpServletRequest request,@RequestBody int bookId) {
-        int res = bookService.deleteBook(bookId);
+    public ModelAndView deleteBook(@ModelAttribute String id) {
+        long bookid = Long.parseLong(id);
+        int res = bookService.deleteBook(bookid);
         Map<String, Integer> map = new HashMap<>();
         ModelAndView modelAndView = new ModelAndView(new MappingJackson2JsonView());
         if (res == 1) {
@@ -101,7 +100,7 @@ public class BookController {
         book.setPrice(bookAddCommand.getPrice());
         book.setRate(bookAddCommand.getRate());
         book.setDescription(bookAddCommand.getDescription());
-        book.setISBN(bookAddCommand.getIsbn());
+        book.setIsbn(bookAddCommand.getIsbn());
 
         boolean succ = bookService.addBook(book);
         Map<String, Integer> map = new HashMap<>();

@@ -6,11 +6,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 
 @Repository
 public class BookDao {
@@ -55,7 +53,7 @@ public class BookDao {
                     book.setPrice(resultSet.getString("price"));
                     book.setRate(resultSet.getFloat("rate"));
                     book.setDescription(resultSet.getString("description"));
-                    book.setISBN(resultSet.getString("ISBN"));
+                    book.setIsbn(resultSet.getString("ISBN"));
                     book.setRent(resultSet.getBoolean("isRent"));
                     books.add(book);
                 }
@@ -83,7 +81,7 @@ public class BookDao {
                     book.setPrice(resultSet.getString("price"));
                     book.setRate(resultSet.getFloat("rate"));
                     book.setDescription(resultSet.getString("description"));
-                    book.setISBN(resultSet.getString("ISBN"));
+                    book.setIsbn(resultSet.getString("ISBN"));
                     book.setRent(resultSet.getBoolean("isRent"));
                     books.add(book);
                 }
@@ -109,13 +107,13 @@ public class BookDao {
         String publishDate = book.getPublishDate();
         String price = book.getPrice();
         float rate = book.getRate();
-        String ISBN = book.getISBN();
+        String ISBN = book.getIsbn();
         String description = book.getDescription();
 
         return jdbcTemplate.update(ADD_BOOK_SQL, new Object[]{name, cover, clazz, author, publisher, publishDate, price, rate, description, ISBN, isRent});
     }
 
-    public Book getBook(Long bookId) {
+    public Book getBook(long bookId) {
         final Book book = new Book();
         jdbcTemplate.query(GET_BOOK_SQL, new Object[]{bookId}, new RowCallbackHandler() {
             public void processRow(ResultSet resultSet) throws SQLException {
@@ -129,7 +127,7 @@ public class BookDao {
                 book.setPrice(resultSet.getString("price"));
                 book.setRate(resultSet.getFloat("rate"));
                 book.setDescription(resultSet.getString("description"));
-                book.setISBN(resultSet.getString("ISBN"));
+                book.setIsbn(resultSet.getString("ISBN"));
                 book.setRent(resultSet.getBoolean("isRent"));
             }
 
@@ -138,7 +136,7 @@ public class BookDao {
     }
 
     public int editBook(Book book) {
-        int id = book.getId();
+        long id = book.getId();
         String name = book.getName();
         String cover = book.getCover();
         String author = book.getAuthor();
@@ -148,7 +146,7 @@ public class BookDao {
         String publishDate = book.getPublishDate();
         String price = book.getPrice();
         float rate = book.getRate();
-        String ISBN = book.getISBN();
+        String ISBN = book.getIsbn();
         String description = book.getDescription();
 
         return jdbcTemplate.update(EDIT_BOOK_SQL, new Object[]{name, cover, clazz, author, publisher, publishDate, price, rate, description, ISBN, isRent,id});
