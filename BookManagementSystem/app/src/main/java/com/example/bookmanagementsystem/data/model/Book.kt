@@ -18,6 +18,6 @@ data class Book(
     var publishDate: String = "",
     var price: String = "",
     var rate: Float = 0f,
-    var ISBN: String = "",
+    var isbn: String = "",
     var description: String = ""
 ) : Serializable
