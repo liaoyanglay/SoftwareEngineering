@@ -64,9 +64,8 @@ public class BookController {
     @RequestMapping(value = "/deletebook",method = RequestMethod.POST,
             produces = {"application/JSON;charset=UTF-8"})
     @ResponseBody
-    public ModelAndView deleteBook(@ModelAttribute String id) {
-        long bookid = Long.parseLong(id);
-        int res = bookService.deleteBook(bookid);
+    public ModelAndView deleteBook(@ModelAttribute("id") String id) {
+        int res = bookService.deleteBook(Long.parseLong(id));
         Map<String, Integer> map = new HashMap<>();
         ModelAndView modelAndView = new ModelAndView(new MappingJackson2JsonView());
         if (res == 1) {
