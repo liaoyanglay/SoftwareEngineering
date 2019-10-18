@@ -2,9 +2,11 @@ package com.example.bookmanagementsystem.ui.book
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.appcompat.widget.SearchView
@@ -13,7 +15,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.bookmanagementsystem.R
 import kotlinx.android.synthetic.main.fragment_book.*
 
@@ -38,7 +39,12 @@ class BookFragment : Fragment(),
             ViewModelProviders.of(this).get(BookViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_book, container, false)
         bookViewModel.allBooks.observe(this, Observer {
-            adapter.addBookList(it)
+            progressBar.visibility = View.GONE
+            if (it.isEmpty()) {
+                showToast("获取失败")
+            } else {
+                adapter.setBookList(it)
+            }
         })
         return root
     }
@@ -74,9 +80,22 @@ class BookFragment : Fragment(),
             intent.putExtra(BookInfoActivity.BOOK_DATA, it)
             startActivity(intent)
         }
+        add_button.setOnClickListener {
+            val intent = Intent(requireContext(), AddBookActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        bookViewModel.fetchBooks()
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
+        if (!TextUtils.isEmpty(query)) {
+            bookViewModel.fetchBooks(query!!)
+            progressBar.visibility = View.VISIBLE
+        }
         return false
     }
 
@@ -87,6 +106,11 @@ class BookFragment : Fragment(),
     override fun onClose(): Boolean {
         category_button.visibility = View.VISIBLE
         toolbar_text.visibility = View.VISIBLE
+        bookViewModel.fetchBooks()
         return false
+    }
+
+    private fun showToast(msg: String) {
+        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
     }
 }

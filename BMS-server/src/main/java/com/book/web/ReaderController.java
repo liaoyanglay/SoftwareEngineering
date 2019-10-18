@@ -8,6 +8,7 @@ import com.book.service.ReaderInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -39,13 +40,13 @@ public class ReaderController {
         this.readerCardService = readerCardService;
     }
 
-    @RequestMapping("allreaders.html")
-    public ModelAndView allBooks(){
-        ArrayList<ReaderInfo> readers=readerInfoService.readerInfos();
-        ModelAndView modelAndView=new ModelAndView("admin_readers");
-        modelAndView.addObject("readers",readers);
-        return modelAndView;
+    @RequestMapping(value = "/allreaders",produces = {"application/JSON;charset=UTF-8"})
+    @ResponseBody
+    public ArrayList<ReaderInfo> allReaders() {
+        ArrayList<ReaderInfo> allreaders=readerInfoService.readerInfos();
+        return allreaders;
     }
+
 
     @RequestMapping("reader_delete.html")
     public String readerDelete(HttpServletRequest request,RedirectAttributes redirectAttributes){

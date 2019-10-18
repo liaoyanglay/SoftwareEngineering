@@ -26,8 +26,13 @@ public class LendService {
         return lendDao.bookReturnOne(bookId) > 0 && lendDao.bookReturnTwo(bookId) > 0;
     }
 
-    //查询流水记录
-    public ArrayList<Lend> lendList() {
+    public boolean hasBook(long bookId){
+        return lendDao.hasBook(bookId)>0;
+    }
+
+    public boolean hasReader(int readerId) {return lendDao.hasReader(readerId)>0;}
+
+    public ArrayList<Lend> lendList(){
         return lendDao.lendList();
     }
     //查询改读者流水记录

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="120dp">
+
+
+    <TextView
+        android:id="@+id/sernum_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@id/readerId_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="流水号：111111111" />
+
+    <TextView
+        android:id="@+id/readerId_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/bookId_text"
+        app:layout_constraintStart_toStartOf="@+id/sernum_text"
+        app:layout_constraintTop_toBottomOf="@+id/sernum_text"
+        tools:text="aaa" />
+
+    <TextView
+        android:id="@+id/bookId_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/lend_date_text"
+        app:layout_constraintStart_toStartOf="@+id/readerId_text"
+        app:layout_constraintTop_toBottomOf="@+id/readerId_text"
+        tools:text="book" />
+
+    <TextView
+        android:id="@+id/lend_date_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/bookId_text"
+        app:layout_constraintTop_toBottomOf="@+id/bookId_text"
+        tools:text="lend" />
+
+    <TextView
+        android:id="@+id/return_date_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/lend_date_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/lend_date_text"
+        app:layout_constraintTop_toTopOf="@+id/lend_date_text"
+        tools:text="return" />
+</androidx.constraintlayout.widget.ConstraintLayout>

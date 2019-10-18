@@ -41,7 +41,7 @@ public class BookService {
         Book book=bookDao.getBook(bookId);
         return book;
     }
-    //编辑书籍
+
     public boolean editBook(Book book){
         return bookDao.editBook(book)>0;
     }

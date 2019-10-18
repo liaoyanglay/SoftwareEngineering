@@ -1,16 +1,24 @@
 package com.book.web;
 
 import com.book.domain.Book;
+import com.book.domain.Lend;
 import com.book.domain.ReaderCard;
 import com.book.service.BookService;
 import com.book.service.LendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class LendController {
@@ -26,60 +34,54 @@ public class LendController {
         this.bookService = bookService;
     }
 
-
-    @RequestMapping("/lendbook.html")
-    public ModelAndView bookLend(HttpServletRequest request){
-        long bookId=Integer.parseInt(request.getParameter("bookId"));
-        Book book=bookService.getBook(bookId);
-       ModelAndView modelAndView=new ModelAndView("admin_book_lend");
-       modelAndView.addObject("book",book);
-       return modelAndView;
-    }
-
-    @RequestMapping("/lendbookdo.html")
-    public String bookLendDo(HttpServletRequest request,RedirectAttributes redirectAttributes,int readerId){
-        long bookId=Integer.parseInt(request.getParameter("id"));
-        boolean lendsucc=lendService.bookLend(bookId,readerId);
-        if (lendsucc){
-            redirectAttributes.addFlashAttribute("succ", "图书借阅成功！");
-            return "redirect:/allbooks.html";
-        }else {
-            redirectAttributes.addFlashAttribute("succ", "图书借阅成功！");
-            return "redirect:/allbooks.html";
+    @RequestMapping(value = "/lendbook",method = RequestMethod.POST,
+            produces = {"application/JSON;charset=UTF-8"})
+    @ResponseBody
+    public ModelAndView bookLendDo(@ModelAttribute("bookId") String bookId,
+                             @ModelAttribute("readerId") String readerId){
+        boolean exist = lendService.hasBook(Long.parseLong(bookId))
+                && lendService.hasReader(Integer.parseInt(readerId));
+        boolean lendsucc = false;
+        if(exist)
+            lendsucc=lendService.bookLend(Long.parseLong(bookId),Integer.parseInt(readerId));
+        Map<String, Integer> map = new HashMap<>();
+        ModelAndView modelAndView = new ModelAndView(new MappingJackson2JsonView());
+        if (lendsucc) {
+            map.put("state",0);
+        } else {
+            map.put("state",1);
         }
-
-
-    }
-
-    @RequestMapping("/returnbook.html")
-    public String bookReturn(HttpServletRequest request,RedirectAttributes redirectAttributes){
-        long bookId=Integer.parseInt(request.getParameter("bookId"));
-        boolean retSucc=lendService.bookReturn(bookId);
-        if (retSucc){
-            redirectAttributes.addFlashAttribute("succ", "图书归还成功！");
-            return "redirect:/allbooks.html";
-        }
-        else {
-            redirectAttributes.addFlashAttribute("error", "图书归还失败！");
-            return "redirect:/allbooks.html";
-        }
-    }
-
-
-    @RequestMapping("/lendlist.html")
-    public ModelAndView lendList(){
-
-        ModelAndView modelAndView=new ModelAndView("admin_lend_list");
-        modelAndView.addObject("list",lendService.lendList());
+        modelAndView.addObject(map);
         return modelAndView;
     }
-    @RequestMapping("/mylend.html")
-    public ModelAndView myLend(HttpServletRequest request){
-        ReaderCard readerCard=(ReaderCard) request.getSession().getAttribute("readercard");
-        ModelAndView modelAndView=new ModelAndView("reader_lend_list");
-        modelAndView.addObject("list",lendService.myLendList(readerCard.getReaderId()));
+
+    @RequestMapping(value = "/returnbook",method = RequestMethod.POST,
+            produces = {"application/JSON;charset=UTF-8"})
+    @ResponseBody
+    public ModelAndView bookReturn(@ModelAttribute("bookId") String bookId){
+        boolean exist = lendService.hasBook(Long.parseLong(bookId));
+        boolean lendsucc = false;
+        if(exist)
+            lendsucc=lendService.bookReturn(Long.parseLong(bookId));
+        Map<String, Integer> map = new HashMap<>();
+        ModelAndView modelAndView = new ModelAndView(new MappingJackson2JsonView());
+        if (lendsucc) {
+            map.put("state",0);
+        } else {
+            map.put("state",1);
+        }
+        modelAndView.addObject(map);
         return modelAndView;
     }
+
+
+    @RequestMapping(value = "/lendlist",produces = {"application/JSON;charset=UTF-8"})
+    @ResponseBody
+    public ArrayList<Lend> allBook() {
+        ArrayList<Lend> lendlist = lendService.lendList();
+        return lendlist;
+    }
+
 
 
 
