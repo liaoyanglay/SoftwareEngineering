@@ -16,18 +16,22 @@ public class LendService {
         this.lendDao = lendDao;
     }
 
-    public boolean bookReturn(long bookId){
-        return lendDao.bookReturnOne(bookId)>0 && lendDao.bookReturnTwo(bookId)>0;
+    //借书
+    public boolean bookLend(long bookId, int readerId) {
+        return lendDao.bookLendOne(bookId, readerId) > 0 && lendDao.bookLendTwo(bookId) > 0;
     }
 
-    public boolean bookLend(long bookId,int readerId){
-        return lendDao.bookLendOne(bookId,readerId)>0 && lendDao.bookLendTwo(bookId)>0;
+    //还书
+    public boolean bookReturn(long bookId) {
+        return lendDao.bookReturnOne(bookId) > 0 && lendDao.bookReturnTwo(bookId) > 0;
     }
 
-    public ArrayList<Lend> lendList(){
+    //查询流水记录
+    public ArrayList<Lend> lendList() {
         return lendDao.lendList();
     }
-    public ArrayList<Lend> myLendList(int readerId){
+    //查询改读者流水记录
+    public ArrayList<Lend> myLendList(int readerId) {
         return lendDao.myLendList(readerId);
     }
 

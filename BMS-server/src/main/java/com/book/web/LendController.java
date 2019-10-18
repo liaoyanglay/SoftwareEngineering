@@ -26,6 +26,7 @@ public class LendController {
         this.bookService = bookService;
     }
 
+
     @RequestMapping("/lendbook.html")
     public ModelAndView bookLend(HttpServletRequest request){
         long bookId=Integer.parseInt(request.getParameter("bookId"));

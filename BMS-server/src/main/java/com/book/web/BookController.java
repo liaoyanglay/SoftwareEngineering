@@ -22,6 +22,7 @@ public class BookController {
         this.bookService = bookService;
     }
 
+    //查询符合条件的书籍信息，返回json数据
     @RequestMapping(value = "/querybook", produces = {"application/JSON;charset=UTF-8"})
     @ResponseBody
     public ArrayList<Book> queryBookDo(@RequestParam("name") String searchWord) {
@@ -54,6 +55,7 @@ public class BookController {
 
     }
 */
+    //查询所有书籍信息，返回json数据
     @RequestMapping(value = "/allbooks",produces = {"application/JSON;charset=UTF-8"})
     @ResponseBody
     public ArrayList<Book> allBook() {
@@ -85,6 +87,7 @@ public class BookController {
 
     }
     */
+    //接收书籍信息,调用addBook向数据库添加书籍信息
     @RequestMapping(value = "/addbook",method = RequestMethod.POST,
             produces = {"application/JSON;charset=UTF-8"})
     @ResponseBody
@@ -122,6 +125,7 @@ public class BookController {
         return modelAndView;
     }
 */
+    //接收书籍信息,调用editBook更新数据库信息
     @RequestMapping(value = "/editbook",method = RequestMethod.POST,
             produces = {"application/JSON;charset=UTF-8"})
     @ResponseBody
