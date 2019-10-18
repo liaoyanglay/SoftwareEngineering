@@ -7,10 +7,7 @@ import com.book.service.BookService;
 import com.book.service.LendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
@@ -34,7 +31,7 @@ public class LendController {
         this.bookService = bookService;
     }
 
-
+    //借书处理
     @RequestMapping(value = "/lendbook",method = RequestMethod.POST,
             produces = {"application/JSON;charset=UTF-8"})
     @ResponseBody
@@ -56,6 +53,7 @@ public class LendController {
         return modelAndView;
     }
 
+    //还书处理
     @RequestMapping(value = "/returnbook",method = RequestMethod.POST,
             produces = {"application/JSON;charset=UTF-8"})
     @ResponseBody
@@ -75,7 +73,7 @@ public class LendController {
         return modelAndView;
     }
 
-
+    //查询所有的流水
     @RequestMapping(value = "/lendlist",produces = {"application/JSON;charset=UTF-8"})
     @ResponseBody
     public ArrayList<Lend> allBook() {
@@ -83,8 +81,11 @@ public class LendController {
         return lendlist;
     }
 
-
-
-
-
+    //查询某个读者的流水
+    @RequestMapping(value = "/readerlendlist",produces = {"application/JSON;charset=UTF-8"})
+    @ResponseBody
+    public ArrayList<Lend> myallBook(@RequestParam("readerId") String readerId) {
+        ArrayList<Lend> myLendList = lendService.myLendList(Integer.parseInt(readerId));
+        return myLendList;
+    }
 }

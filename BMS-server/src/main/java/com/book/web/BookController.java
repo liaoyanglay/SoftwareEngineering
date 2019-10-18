@@ -54,6 +54,7 @@ public class BookController {
 
     }
 */
+    //查询所有图书
     @RequestMapping(value = "/allbooks",produces = {"application/JSON;charset=UTF-8"})
     @ResponseBody
     public ArrayList<Book> allBook() {

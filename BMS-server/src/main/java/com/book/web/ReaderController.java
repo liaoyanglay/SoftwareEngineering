@@ -7,10 +7,13 @@ import com.book.service.ReaderCardService;
 import com.book.service.ReaderInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +21,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class ReaderController {
@@ -79,66 +84,40 @@ public class ReaderController {
         return modelAndView;
     }
 
-    @RequestMapping("reader_edit_do.html")
-    public String readerInfoEditDo(HttpServletRequest request,String name,String sex,String birth,String address,String telcode,RedirectAttributes redirectAttributes){
-        int readerId= Integer.parseInt(request.getParameter("id"));
-        ReaderCard readerCard = loginService.findReaderCardByUserId(readerId);
-        String oldName=readerCard.getName();
-        if(!oldName.equals(name)){
-            boolean succo=readerCardService.updateName(readerId,name);
-            SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-            Date nbirth=new Date();
-            try{
-                java.util.Date date=sdf.parse(birth);
-                nbirth=date;
-            }catch (ParseException e){
-                e.printStackTrace();
-            }
-            ReaderInfo readerInfo=new ReaderInfo();
-            readerInfo.setAddress(address);
-            readerInfo.setBirth(nbirth);
-            readerInfo.setName(name);
-            readerInfo.setReaderId(readerId);
-            readerInfo.setTelcode(telcode);
-            readerInfo.setSex(sex);
-            boolean succ=readerInfoService.editReaderInfo(readerInfo);
-            if(succo&&succ){
-                redirectAttributes.addFlashAttribute("succ", "读者信息修改成功！");
-                return "redirect:/allreaders.html";
-            }else {
-                redirectAttributes.addFlashAttribute("error", "读者信息修改失败！");
-                return "redirect:/allreaders.html";
-            }
+    @RequestMapping(value = "/editreaderinfo",method = RequestMethod.POST,
+            produces = {"application/JSON;charset=UTF-8"})
+    @ResponseBody
+    public ModelAndView readerInfoEditDo(@ModelAttribute("readerId") String readerId,@ModelAttribute("name") String name,
+                                   @ModelAttribute("sex") String sex, @ModelAttribute("birth") String birth,
+                                   @ModelAttribute("address") String address, @ModelAttribute("telcode") String telcode){
+        int readerid = Integer.parseInt(readerId);
+        ReaderInfo readerInfo = new ReaderInfo();
+        readerInfo.setReaderId(readerid);
+        readerInfo.setName(name);
+        readerInfo.setSex(sex);
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        Date nbirth=new Date();
+        try{
+            java.util.Date date=sdf.parse(birth);
+            nbirth=date;
+        }catch (ParseException e){
+            e.printStackTrace();
         }
-        else {
-            System.out.println("部分修改");
-            SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-            Date nbirth=new Date();
-            try{
-                java.util.Date date=sdf.parse(birth);
-                nbirth=date;
-            }catch (ParseException e){
-                e.printStackTrace();
-            }
-            ReaderInfo readerInfo=new ReaderInfo();
-            readerInfo.setAddress(address);
-            readerInfo.setBirth(nbirth);
-            readerInfo.setName(name);
-            readerInfo.setReaderId(readerId);
-            readerInfo.setTelcode(telcode);
-            readerInfo.setSex(sex);
-
-            boolean succ=readerInfoService.editReaderInfo(readerInfo);
-            if(succ){
-                redirectAttributes.addFlashAttribute("succ", "读者信息修改成功！");
-                return "redirect:/allreaders.html";
-            }else {
-                redirectAttributes.addFlashAttribute("error", "读者信息修改失败！");
-                return "redirect:/allreaders.html";
-            }
+        readerInfo.setBirth(nbirth);
+        readerInfo.setAddress(address);
+        readerInfo.setTelcode(telcode);
+        boolean editsucc = readerInfoService.editReaderInfo(readerInfo);
+        Map<String, Integer> map = new HashMap<>();
+        ModelAndView modelAndView = new ModelAndView(new MappingJackson2JsonView());
+        if (editsucc) {
+            map.put("state",0);
+        } else {
+            map.put("state",1);
         }
-
+        modelAndView.addObject(map);
+        return modelAndView;
     }
+
 
     @RequestMapping("reader_add.html")
     public ModelAndView readerInfoAdd(){
