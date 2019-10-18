@@ -47,7 +47,7 @@ class BookAdapter(private var bookList: ArrayList<Book>? = null) :
             book_name_text.text = book.name
             author_text.text = book.author
             Glide.with(cover_image).load(book.cover).into(cover_image)
-            rend_text.visibility = if (book.isRent) View.VISIBLE else View.GONE
+            rend_text.visibility = if (book.rent) View.VISIBLE else View.INVISIBLE
             class_text.text = book.clazz
         }
     }

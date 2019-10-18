@@ -64,7 +64,7 @@ class AddBookActivity : AppCompatActivity() {
             override fun onResponse(call: Call, response: Response) {
                 val json = response.body()!!.string()
                 val state: State = Gson().fromJson(json, State::class.java)
-                if (state.status == State.OK) {
+                if (state.state == State.OK) {
                     showToast("添加成功")
                     finish()
                 } else {

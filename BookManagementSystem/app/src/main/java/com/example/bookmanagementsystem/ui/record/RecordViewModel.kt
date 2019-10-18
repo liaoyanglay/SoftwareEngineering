@@ -19,6 +19,7 @@ class RecordViewModel : ViewModel() {
 
     val allRecords = _allRecords as LiveData<ArrayList<Record>>
 
+    // 发送获取借阅记录的请求
     fun fetchRecords() {
         val client = NetConfig.client
         val request = Request.Builder()

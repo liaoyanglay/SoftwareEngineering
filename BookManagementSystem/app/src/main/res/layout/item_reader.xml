@@ -44,4 +44,14 @@
         app:layout_constraintStart_toStartOf="@+id/name_text"
         app:layout_constraintTop_toBottomOf="@+id/male_text"
         tools:text="电话：10086" />
+
+    <TextView
+        android:id="@+id/reader_id_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/name_text"
+        app:layout_constraintTop_toTopOf="@+id/name_text"
+        tools:text="id" />
 </androidx.constraintlayout.widget.ConstraintLayout>
