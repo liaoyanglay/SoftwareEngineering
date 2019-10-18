@@ -34,27 +34,7 @@ public class BookController {
             return null;
         }
     }
-/*
-    @RequestMapping("/reader_querybook.html")
-    public ModelAndView readerQueryBook() {
-        return new ModelAndView("reader_book_query");
 
-    }
-
-    @RequestMapping("/reader_querybook_do.html")
-    public String readerQueryBookDo(HttpServletRequest request, String searchWord, RedirectAttributes redirectAttributes) {
-        boolean exist = bookService.matchBook(searchWord);
-        if (exist) {
-            ArrayList<Book> books = bookService.queryBook(searchWord);
-            redirectAttributes.addFlashAttribute("books", books);
-            return "redirect:/reader_querybook.html";
-        } else {
-            redirectAttributes.addFlashAttribute("error", "没有匹配的图书！");
-            return "redirect:/reader_querybook.html";
-        }
-
-    }
-*/
 
     //查询所有书籍信息，返回json数据
     @RequestMapping(value = "/allbooks",produces = {"application/JSON;charset=UTF-8"})
@@ -67,32 +47,20 @@ public class BookController {
     @RequestMapping(value = "/deletebook",method = RequestMethod.POST,
             produces = {"application/JSON;charset=UTF-8"})
     @ResponseBody
-    public ModelAndView deleteBook(@ModelAttribute("id") String id) {
+    public String deleteBook(@ModelAttribute("id") String id) {
         int res = bookService.deleteBook(Long.parseLong(id));
-        Map<String, Integer> map = new HashMap<>();
-        ModelAndView modelAndView = new ModelAndView(new MappingJackson2JsonView());
         if (res == 1) {
-            map.put("state",0);
+            return "{\"state\":0}";
         } else {
-            map.put("state",1);
+            return "{\"state\":1}";
         }
-        modelAndView.addObject(map);
-        return modelAndView;
     }
 
-    /*
-    @RequestMapping("/book_add.html")
-    public ModelAndView addBook(HttpServletRequest request) {
-
-        return new ModelAndView("admin_book_add");
-
-    }
-    */
     //接收书籍信息,调用addBook向数据库添加书籍信息
     @RequestMapping(value = "/addbook",method = RequestMethod.POST,
             produces = {"application/JSON;charset=UTF-8"})
     @ResponseBody
-    public ModelAndView addBookDo(@ModelAttribute BookAddCommand bookAddCommand) {
+    public String addBookDo(@ModelAttribute BookAddCommand bookAddCommand) {
         Book book = new Book();
         book.setName(bookAddCommand.getName());
         book.setCover(bookAddCommand.getCover());
@@ -106,63 +74,24 @@ public class BookController {
         book.setIsbn(bookAddCommand.getIsbn());
 
         boolean succ = bookService.addBook(book);
-        Map<String, Integer> map = new HashMap<>();
-        ModelAndView modelAndView = new ModelAndView(new MappingJackson2JsonView());
         if (succ) {
-            map.put("state",0);
+            return "{\"state\":0}";
         } else {
-            map.put("state",1);
+            return "{\"state\":1}";
         }
-        modelAndView.addObject(map);
-        return modelAndView;
     }
-/*
-    @RequestMapping("/updatebook.html")
-    public ModelAndView bookEdit(HttpServletRequest request) {
-        long bookId = Integer.parseInt(request.getParameter("bookId"));
-        Book book = bookService.getBook(bookId);
-        ModelAndView modelAndView = new ModelAndView("admin_book_edit");
-        modelAndView.addObject("detail", book);
-        return modelAndView;
-    }
-*/
+
     //接收书籍信息,调用editBook更新数据库信息
     @RequestMapping(value = "/editbook",method = RequestMethod.POST,
             produces = {"application/JSON;charset=UTF-8"})
     @ResponseBody
-    public ModelAndView bookEditDo(@ModelAttribute Book book) {
+    public String bookEditDo(@ModelAttribute Book book) {
 
         boolean succ = bookService.editBook(book);
-        Map<String, Integer> map = new HashMap<>();
-        ModelAndView modelAndView = new ModelAndView(new MappingJackson2JsonView());
         if (succ) {
-            map.put("state",0);
+            return "{\"state\":0}";
         } else {
-            map.put("state",1);
+            return "{\"state\":1}";
         }
-        modelAndView.addObject(map);
-        return modelAndView;
     }
-
-/*
-    @RequestMapping("/bookdetail.html")
-    public ModelAndView bookDetail(HttpServletRequest request) {
-        long bookId = Integer.parseInt(request.getParameter("bookId"));
-        Book book = bookService.getBook(bookId);
-        ModelAndView modelAndView = new ModelAndView("admin_book_detail");
-        modelAndView.addObject("detail", book);
-        return modelAndView;
-    }
-
-
-    @RequestMapping("/readerbookdetail.html")
-    public ModelAndView readerBookDetail(HttpServletRequest request) {
-        long bookId = Integer.parseInt(request.getParameter("bookId"));
-        Book book = bookService.getBook(bookId);
-        ModelAndView modelAndView = new ModelAndView("reader_book_detail");
-        modelAndView.addObject("detail", book);
-        return modelAndView;
-    }
-*/
-
 }

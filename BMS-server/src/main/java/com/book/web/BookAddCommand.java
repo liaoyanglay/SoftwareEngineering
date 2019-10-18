@@ -2,26 +2,16 @@ package com.book.web;
 
 public class BookAddCommand {
 
-//    private int id;
     private String name;
     private String cover;
     private String author;
     private String clazz;
-//    private boolean isRent;
     private String publisher;
     private String publishDate;
     private String price;
     private float rate;
     private String isbn;
     private String description;
-
-//    public int getId() {
-//        return id;
-//    }
-
-//    public void setId(int id) {
-//        this.id = id;
-//    }
 
     public String getName() {
         return name;
@@ -54,14 +44,6 @@ public class BookAddCommand {
     public void setClazz(String clazz) {
         this.clazz = clazz;
     }
-
-//    public boolean isRent() {
-//        return isRent;
-//    }
-
-//    public void setRent(boolean rent) {
-//        isRent = rent;
-//    }
 
     public String getPublisher() {
         return publisher;

@@ -15,7 +15,7 @@
     <!--  定义一个使用DBCP实现的数据源 -->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close"
-          p:driverClassName="com.mysql.jdbc.Driver"
+          p:driverClassName="com.mysql.cj.jdbc.Driver"
           p:url="jdbc:mysql://localhost:3306/library?serverTimezone=Asia/Shanghai &amp;characterEncoding=utf8"
           p:username="root"
           p:password="3714231999"/>
