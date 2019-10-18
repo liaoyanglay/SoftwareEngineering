@@ -19,6 +19,7 @@ class ReaderViewModel : ViewModel() {
 
     val allReaders = _allReaders as LiveData<ArrayList<Reader>>
 
+    // 发送获取读者的网络请求
     fun fetchReaders() {
         val client = NetConfig.client
         val request = Request.Builder()

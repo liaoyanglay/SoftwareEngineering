@@ -7,7 +7,9 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MenuItem
+import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
 import com.example.bookmanagementsystem.R
 import com.example.bookmanagementsystem.data.NetConfig
@@ -51,7 +53,73 @@ class BookInfoActivity : AppCompatActivity() {
         toolbar.menu.findItem(R.id.delete_book)
             .setOnMenuItemClickListener { onOptionsItemSelected(it) }
         rend_button.setOnClickListener {
+            if (!book.rent) {
+                val editLayout = layoutInflater.inflate(R.layout.dialog_reader_id, null, false)
+                val editText = editLayout.findViewById<EditText>(R.id.reader_id_edit)
+                AlertDialog.Builder(this)
+                    .setView(editLayout)
+                    .setCancelable(true)
+                    .setMessage("请输入读者ID：")
+                    .setPositiveButton("确定") { _, _ ->
+                        if (editText.text.isBlank()) {
+                            showToast("ID不能为空")
+                            return@setPositiveButton
+                        }
+                        val formBody = FormBody.Builder()
+                            .add("bookId", book.id.toString())
+                            .add("readerId", editText.text.toString())
+                            .build()
+                        val request = Request.Builder().post(formBody)
+                            .url(NetConfig.BASE_URL + NetConfig.LEND_BOOK)
+                            .build()
+                        NetConfig.client.newCall(request).enqueue(object : Callback {
+                            override fun onFailure(call: Call, e: IOException) {
+                                showToast("借阅失败")
+                            }
 
+                            override fun onResponse(call: Call, response: Response) {
+                                val json = response.body()!!.string()
+                                val state: State = Gson().fromJson(json, State::class.java)
+                                if (state.state == State.OK) {
+                                    showToast("借阅成功")
+                                    runOnUiThread {
+                                        book.rent = true
+                                        setBook(book)
+                                    }
+                                } else {
+                                    showToast("借阅失败")
+                                }
+                            }
+                        })
+                    }
+                    .show()
+            } else {
+                val formBody = FormBody.Builder()
+                    .add("bookId", book.id.toString())
+                    .build()
+                val request = Request.Builder().post(formBody)
+                    .url(NetConfig.BASE_URL + NetConfig.RETURN_BOOK)
+                    .build()
+                NetConfig.client.newCall(request).enqueue(object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        showToast("归还失败")
+                    }
+
+                    override fun onResponse(call: Call, response: Response) {
+                        val json = response.body()!!.string()
+                        val state: State = Gson().fromJson(json, State::class.java)
+                        if (state.state == State.OK) {
+                            showToast("归还成功")
+                            runOnUiThread {
+                                book.rent = false
+                                setBook(book)
+                            }
+                        } else {
+                            showToast("归还失败")
+                        }
+                    }
+                })
+            }
         }
     }
 
@@ -93,7 +161,7 @@ class BookInfoActivity : AppCompatActivity() {
                         book.cover = cover_edit.text.toString()
                         book.author = author_edit.text.toString()
                         book.clazz = clazz_edit.text.toString()
-                        book.isRent = this@BookInfoActivity.book.isRent
+                        book.rent = this@BookInfoActivity.book.rent
                         book.publisher = publisher_edit.text.toString()
                         book.publishDate = publish_date_edit.text.toString()
                         book.price = price_edit.text.toString()
@@ -122,7 +190,7 @@ class BookInfoActivity : AppCompatActivity() {
                         val json = response.body()!!.string()
                         try {
                             val state: State = Gson().fromJson(json, State::class.java)
-                            if (state.status == State.OK) {
+                            if (state.state == State.OK) {
                                 showToast("删除成功")
                                 finish()
                             } else {
@@ -146,7 +214,7 @@ class BookInfoActivity : AppCompatActivity() {
             .add("cover", book.cover)
             .add("author", book.author)
             .add("clazz", book.clazz)
-            .add("isRent", book.isRent.toString())
+            .add("rent", book.rent.toString())
             .add("publisher", book.publisher)
             .add("publishDate", book.publishDate)
             .add("price", book.price)
@@ -165,7 +233,7 @@ class BookInfoActivity : AppCompatActivity() {
             override fun onResponse(call: Call, response: Response) {
                 val json = response.body()!!.string()
                 val state: State = Gson().fromJson(json, State::class.java)
-                if (state.status == State.OK) {
+                if (state.state == State.OK) {
                     showToast("编辑成功")
                     runOnUiThread {
                         setBook(book)
@@ -187,7 +255,7 @@ class BookInfoActivity : AppCompatActivity() {
         price_text.text = "价格：" + book.price
         ISBN_text.text = "ISBN：" + book.isbn
         description_text.text = book.description
-        rend_button.text = if (book.isRent) "归 还" else "借 阅"
+        rend_button.text = if (book.rent) "归 还" else "借 阅"
     }
 
     private fun showToast(msg: String) {

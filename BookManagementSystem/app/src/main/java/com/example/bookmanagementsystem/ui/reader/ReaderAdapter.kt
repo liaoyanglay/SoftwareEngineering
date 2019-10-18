@@ -47,6 +47,7 @@ class ReaderAdapter(private var readerList: ArrayList<Reader>? = null) :
             name_text.text = "姓名：${reader.name}"
             male_text.text = "性别：${reader.sex}"
             tel_text.text = "电话：${reader.telcode}"
+            reader_id_text.text = "ID:${reader.readerId}"
         }
     }
 }

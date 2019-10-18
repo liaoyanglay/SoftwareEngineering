@@ -13,7 +13,7 @@ data class Book(
     var cover: String = "",
     var author: String = "",
     var clazz: String = "",
-    var isRent: Boolean = false,
+    var rent: Boolean = false,
     var publisher: String = "",
     var publishDate: String = "",
     var price: String = "",

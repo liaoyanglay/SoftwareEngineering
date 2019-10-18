@@ -6,7 +6,7 @@ package com.example.bookmanagementsystem.data.model
  * @email liaoyanglay@outlook.com
  */
 data class State(
-    var status: Int = 0,
+    var state: Int = 0,
     var msg: String = ""
 ) {
     companion object {

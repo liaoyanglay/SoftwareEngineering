@@ -18,6 +18,7 @@ import android.widget.Toast
 import com.example.bookmanagementsystem.MainActivity
 
 import com.example.bookmanagementsystem.R
+import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -27,11 +28,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_login)
-
-        val username = findViewById<EditText>(R.id.username)
-        val password = findViewById<EditText>(R.id.password)
-        val login = findViewById<Button>(R.id.login)
-        val loading = findViewById<ProgressBar>(R.id.loading)
 
         loginViewModel = ViewModelProviders.of(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
@@ -97,6 +93,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    // 登录成功，更新ui
     private fun updateUiWithUser(model: LoggedInUserView) {
         val welcome = getString(R.string.welcome)
         val displayName = model.displayName
@@ -110,6 +107,7 @@ class LoginActivity : AppCompatActivity() {
         ).show()
     }
 
+    // 登录失败
     private fun showLoginFailed(@StringRes errorString: Int) {
         Toast.makeText(applicationContext, "用户名或密码错误", Toast.LENGTH_SHORT).show()
     }

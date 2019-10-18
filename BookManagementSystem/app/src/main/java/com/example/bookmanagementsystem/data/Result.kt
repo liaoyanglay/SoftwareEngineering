@@ -1,7 +1,7 @@
 package com.example.bookmanagementsystem.data
 
 /**
- * A generic class that holds a value with its loading status.
+ * A generic class that holds a value with its loading state.
  * @param <T>
  */
 sealed class Result<out T : Any> {
