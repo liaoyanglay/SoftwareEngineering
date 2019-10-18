@@ -35,6 +35,7 @@ public class LendDao {
 
     private final static String MY_LEND_LIST_SQL="SELECT * FROM lend_list WHERE reader_id = ? ";
 
+
     //根据书号查询图书是否存在
     private final static String HAS_BOOK_SQL = "SELECT count(*) FROM book_info WHERE id = ? ";
 
@@ -44,12 +45,15 @@ public class LendDao {
     public int bookReturnOne(long bookId){
         return  jdbcTemplate.update(BOOK_RETURN_SQL_ONE,new Object[]{df.format(new Date()),bookId});
     }
+    //将书籍的借出状态设为借出
     public int bookReturnTwo(long bookId){
         return jdbcTemplate.update(BOOK_RETURN_SQL_TWO,new Object[]{bookId});
     }
+    //根据归还日期补充生成的流水记录归还日期数据
     public int bookLendOne(long bookId,int readerId){
         return  jdbcTemplate.update(BOOK_LEND_SQL_ONE,new Object[]{bookId,readerId,df.format(new Date())});
     }
+    //将书籍的借出状态设为未借出
     public int bookLendTwo(long bookId){
         return  jdbcTemplate.update(BOOK_LEND_SQL_TWO,new Object[]{bookId});
     }
@@ -84,6 +88,7 @@ public class LendDao {
         return list;
     }
 
+    //查询某一读者的流水记录
     public ArrayList<Lend> myLendList(int readerId){
         final ArrayList<Lend> list=new ArrayList<Lend>();
 

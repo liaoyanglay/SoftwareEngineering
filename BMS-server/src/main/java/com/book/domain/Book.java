@@ -4,18 +4,18 @@ import java.io.Serializable;
 
 public class Book implements Serializable{
 
-    private long id;
-    private String name;
-    private String cover;
-    private String author;
-    private String clazz;
-    private boolean isRent;
-    private String publisher;
-    private String publishDate;
-    private String price;
-    private float rate;
-    private String isbn;
-    private String description;
+    private long id;            //书籍id
+    private String name;        //书名
+    private String cover;       //封面
+    private String author;      //作者
+    private String clazz;       //类别
+    private boolean isRent;     //借出状态
+    private String publisher;   //出版社
+    private String publishDate; //出版日期
+    private String price;       //价格
+    private float rate;         //评价
+    private String isbn;        //ISBN
+    private String description; //内容简介
 
     public long getId() {
         return id;

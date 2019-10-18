@@ -5,11 +5,11 @@ import java.util.Date;
 
 public class Lend implements Serializable {
 
-    private long sernum;
-    private long bookId;
-    private int readerId;
-    private Date lendDate;
-    private Date backDate;
+    private long sernum;        //流水号
+    private long bookId;        //借出书籍ID
+    private int readerId;       //借书人ID
+    private Date lendDate;      //借书日期
+    private Date backDate;      //归还日期
 
     public void setReaderId(int readerId) {
         this.readerId = readerId;

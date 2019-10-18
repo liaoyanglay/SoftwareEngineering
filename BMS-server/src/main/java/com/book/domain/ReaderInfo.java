@@ -5,12 +5,12 @@ import java.util.Date;
 
 public class ReaderInfo implements Serializable{
 
-    private int readerId;
-    private String name;
-    private String sex;
-    private Date birth;
-    private String address;
-    private String telcode;
+    private int readerId;       //读者ID
+    private String name;        //姓名
+    private String sex;         //性别
+    private Date birth;         //出生日期
+    private String address;     //住址
+    private String telcode;     //电话
 
     public void setName(String name) {
         this.name = name;
